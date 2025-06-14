@@ -11,3 +11,7 @@ class Hospital(Base):
     capacity = Column(Integer)
 
     patients = relationship("Patient", back_populates="hospital") 
+
+    @property
+    def current_patients(self):
+        return len(self.patients)

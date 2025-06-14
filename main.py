@@ -40,7 +40,7 @@ app.add_middleware(
 # Include routers
 app.include_router(auth_router.router)
 app.include_router(patient_router.router, prefix="/patients", tags=["Patients"])
-app.include_router(hospital_router.router, prefix="/hospitals", tags=["Hospitals"])
+app.include_router(hospital_router.router, prefix="/hospitals")
 
 # Root endpoint
 @app.get("/", tags=["General"])

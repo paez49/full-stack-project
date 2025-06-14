@@ -10,7 +10,7 @@ router = APIRouter()
 hospital_service = HospitalService()
 
 # Hospital endpoints
-@router.post("/", response_model=HospitalResponseDTO)
+@router.post("/", response_model=HospitalResponseDTO, tags=["Hospitals"])
 async def create_hospital(hospital: HospitalCreateDTO, token: dict = Depends(verify_token)):
     """
     Create a new hospital.
@@ -24,7 +24,7 @@ async def create_hospital(hospital: HospitalCreateDTO, token: dict = Depends(ver
     """
     return hospital_service.create_hospital(hospital)
 
-@router.get("/", response_model=List[HospitalResponseDTO])
+@router.get("/", response_model=List[HospitalResponseDTO], tags=["Hospitals"])
 async def get_hospitals(token: dict = Depends(verify_token)):
     """
     Retrieve all hospitals.
@@ -39,7 +39,7 @@ async def get_hospitals(token: dict = Depends(verify_token)):
     """
     return hospital_service.get_all_hospitals()
 
-@router.get("/{hospital_id}", response_model=HospitalResponseDTO)
+@router.get("/{hospital_id}", response_model=HospitalResponseDTO, tags=["Hospitals"])
 async def get_hospital(hospital_id: int, token: dict = Depends(verify_token)):
     """
     Retrieve a specific hospital by ID.
@@ -56,7 +56,7 @@ async def get_hospital(hospital_id: int, token: dict = Depends(verify_token)):
     """
     return hospital_service.get_hospital_by_id(hospital_id)
 
-@router.put("/{hospital_id}", response_model=HospitalResponseDTO)
+@router.put("/{hospital_id}", response_model=HospitalResponseDTO, tags=["Hospitals"])
 async def update_hospital(hospital_id: int, hospital: HospitalUpdateDTO, token: dict = Depends(verify_token)):
     """
     Update an existing hospital.
@@ -78,7 +78,7 @@ async def update_hospital(hospital_id: int, hospital: HospitalUpdateDTO, token: 
     return updated_hospital
 
 
-@router.delete("/{hospital_id}")
+@router.delete("/{hospital_id}", tags=["Hospitals"])
 async def delete_hospital(hospital_id: int, token: dict = Depends(verify_token)):
     """
     Delete a hospital.
@@ -97,23 +97,23 @@ async def delete_hospital(hospital_id: int, token: dict = Depends(verify_token))
     return {"message": "Hospital deleted successfully"}
 
 # Patient management endpoints
-@router.post("/{hospital_id}/patients", response_model=PatientResponseDTO, tags=["Hospital Patients"])
-async def add_patient_to_hospital(hospital_id: int, patient: PatientCreateDTO, token: dict = Depends(verify_token)):
+@router.post("/{hospital_id}/patients/{patient_id}", response_model=PatientResponseDTO, tags=["Hospital Patients"])
+async def add_patient_to_hospital(hospital_id: int, patient_id: int, token: dict = Depends(verify_token)):
     """
-    Add a new patient to a specific hospital.
+    Assign an existing patient to a specific hospital.
     
     Args:
         hospital_id (int): The unique identifier of the hospital
-        patient (PatientCreateDTO): Patient data for creation
+        patient_id (int): The unique identifier of the patient to assign
         token (dict): JWT token for authentication (automatically handled by FastAPI)
         
     Returns:
-        PatientResponseDTO: Created patient object with assigned ID
+        PatientResponseDTO: Updated patient object with hospital assignment
         
     Raises:
-        HTTPException: 404 Not Found if hospital doesn't exist
+        HTTPException: 404 Not Found if either hospital or patient doesn't exist
     """
-    return hospital_service.add_patient_to_hospital(hospital_id, patient)
+    return hospital_service.add_patient_to_hospital(hospital_id, patient_id)
 
 @router.get("/{hospital_id}/patients", response_model=List[PatientResponseDTO], tags=["Hospital Patients"])
 async def get_hospital_patients(hospital_id: int, token: dict = Depends(verify_token)):
