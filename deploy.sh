@@ -12,7 +12,7 @@ DB_INSTANCE_CLASS="db.t3.micro"
 DB_ALLOCATED_STORAGE=20
 DB_REGION="us-east-1"
 ENV_FILE="./api/.env"
-SG_NAME="health-rds-sg"
+SG_NAME="health-rds-secgroup"
 VPC_ID=$(aws ec2 describe-vpcs --region $DB_REGION --query "Vpcs[0].VpcId" --output text)
 
 echo "Creating security group: $SG_NAME..."
@@ -75,7 +75,6 @@ echo "Saving credentials to $ENV_FILE..."
     echo "RDS_SECURITY_GROUP_ID=$SG_ID"
 } >> $ENV_FILE
 
-echo "PostgreSQL RDS instance created and credentials saved to $ENV_FILE"
 
 
 AWS_REGION="us-east-1"
@@ -150,3 +149,4 @@ echo "Writing environment variables to $ENV_FILE..."
 echo ".env file now contains:"
 cat $ENV_FILE
 
+docker compose up -d

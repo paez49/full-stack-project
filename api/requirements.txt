@@ -7,3 +7,5 @@ httpx
 boto3
 psycopg2-binary
 python-multipart
+pytest
+pytest-asyncio

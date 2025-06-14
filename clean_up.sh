@@ -3,10 +3,10 @@
 set -e
 
 # Variables
-DB_INSTANCE_ID="healtinstance"
-SG_NAME="health-rds-sg"
+DB_INSTANCE_ID="health-instance"
+SG_NAME="health-rds-sgR"
 AWS_REGION="us-east-1"
-ENV_FILE=".env"
+ENV_FILE="./api/.env"
 
 # Load Cognito values from .env if it exists
 if [ -f "$ENV_FILE" ]; then
