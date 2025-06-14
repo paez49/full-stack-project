@@ -1,7 +1,7 @@
 import boto3
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from jose import jwt 
+from jose import ExpiredSignatureError, jwt 
 import httpx
 import os
 # Configura tu pool
@@ -48,7 +48,9 @@ async def verify_token(credentials: HTTPAuthorizationCredentials = Depends(secur
         return payload
 
     except HTTPException as e:
-        raise HTTPException(status_code=401, detail="Token inválido o expirado")
+        raise HTTPException(status_code=401, detail="Token inválido")
+    except ExpiredSignatureError as e:
+        raise HTTPException(status_code=401, detail="Token expirado")
 
 
 async def authenticate_user(username: str, password: str):

@@ -15,7 +15,12 @@ class HospitalDTO(HospitalBase):
 
     class Config:
         from_attributes = True
-
+        
+class HospitalUpdateDTO(BaseModel):
+    name: Optional[str] = None
+    address: Optional[str] = None
+    capacity: Optional[int] = None
+    
 class HospitalCreateDTO(HospitalBase):
     pass
 

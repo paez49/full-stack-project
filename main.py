@@ -39,8 +39,8 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth_router.router)
-app.include_router(patient_router.router, prefix="/patients", tags=["patients"])
-app.include_router(hospital_router.router, prefix="/hospitals", tags=["hospitals"])
+app.include_router(patient_router.router, prefix="/patients", tags=["Patients"])
+app.include_router(hospital_router.router, prefix="/hospitals", tags=["Hospitals"])
 
 # Root endpoint
 @app.get("/", tags=["General"])
@@ -50,13 +50,6 @@ async def root():
     
     Returns:
         dict: A welcome message indicating successful API connection.
-        
-    Example:
-        ```json
-        {
-            "message": "Welcome to Healthcare API"
-        }
-        ```
     """
     return {"message": "Welcome to Healthcare API"}
 
@@ -74,15 +67,6 @@ async def health_check():
             - status: Current health status
             - service: Service status
             - message: Descriptive message about the service state
-            
-    Example:
-        ```json
-        {
-            "status": "healthy",
-            "service": "up",
-            "message": "Service is running"
-        }
-        ```
     """
     return {
         "status": "healthy",

@@ -31,14 +31,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
             
     Raises:
         HTTPException: 401 Unauthorized if credentials are invalid
-        
-    Example:
-        ```json
-        {
-            "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-            "token_type": "bearer"
-        }
-        ```
     """
     auth_result = await authenticate_user(form_data.username, form_data.password)
     if not auth_result:

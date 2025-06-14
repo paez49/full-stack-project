@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from typing import List
 
-from model.dtos.hospital import HospitalResponseDTO, HospitalCreateDTO
+from model.dtos.hospital import HospitalResponseDTO, HospitalCreateDTO, HospitalUpdateDTO
 from model.dtos.patient import PatientCreateDTO, PatientResponseDTO
 from service.hospital_service import HospitalService
 from service.auth_service import verify_token
@@ -21,16 +21,6 @@ async def create_hospital(hospital: HospitalCreateDTO, token: dict = Depends(ver
         
     Returns:
         HospitalResponseDTO: Created hospital object with assigned ID
-        
-    Example:
-        ```json
-        {
-            "id": 1,
-            "name": "General Hospital",
-            "address": "123 Medical St",
-            "capacity": 500
-        }
-        ```
     """
     return hospital_service.create_hospital(hospital)
 
@@ -46,18 +36,6 @@ async def get_hospitals(token: dict = Depends(verify_token)):
         
     Returns:
         List[HospitalResponseDTO]: List of hospital objects
-        
-    Example:
-        ```json
-        [
-            {
-                "id": 1,
-                "name": "General Hospital",
-                "address": "123 Medical St",
-                "capacity": 500
-            }
-        ]
-        ```
     """
     return hospital_service.get_all_hospitals()
 
@@ -75,21 +53,11 @@ async def get_hospital(hospital_id: int, token: dict = Depends(verify_token)):
         
     Raises:
         HTTPException: 404 Not Found if hospital doesn't exist
-        
-    Example:
-        ```json
-        {
-            "id": 1,
-            "name": "General Hospital",
-            "address": "123 Medical St",
-            "capacity": 500
-        }
-        ```
     """
     return hospital_service.get_hospital_by_id(hospital_id)
 
 @router.put("/{hospital_id}", response_model=HospitalResponseDTO)
-async def update_hospital(hospital_id: int, hospital: HospitalCreateDTO, token: dict = Depends(verify_token)):
+async def update_hospital(hospital_id: int, hospital: HospitalUpdateDTO, token: dict = Depends(verify_token)):
     """
     Update an existing hospital.
     
@@ -103,18 +71,12 @@ async def update_hospital(hospital_id: int, hospital: HospitalCreateDTO, token: 
         
     Raises:
         HTTPException: 404 Not Found if hospital doesn't exist
-        
-    Example:
-        ```json
-        {
-            "id": 1,
-            "name": "Updated General Hospital",
-            "address": "456 Medical Ave",
-            "capacity": 600
-        }
-        ```
     """
-    return hospital_service.update_hospital(hospital_id, hospital)
+    updated_hospital = hospital_service.update_hospital(hospital_id, hospital)
+    if not updated_hospital:
+        raise HTTPException(status_code=404, detail="Hospital not found")
+    return updated_hospital
+
 
 @router.delete("/{hospital_id}")
 async def delete_hospital(hospital_id: int, token: dict = Depends(verify_token)):
@@ -130,13 +92,6 @@ async def delete_hospital(hospital_id: int, token: dict = Depends(verify_token))
         
     Raises:
         HTTPException: 404 Not Found if hospital doesn't exist
-        
-    Example:
-        ```json
-        {
-            "message": "Hospital deleted successfully"
-        }
-        ```
     """
     hospital_service.delete_hospital(hospital_id)
     return {"message": "Hospital deleted successfully"}
@@ -157,16 +112,6 @@ async def add_patient_to_hospital(hospital_id: int, patient: PatientCreateDTO, t
         
     Raises:
         HTTPException: 404 Not Found if hospital doesn't exist
-        
-    Example:
-        ```json
-        {
-            "id": 1,
-            "name": "John Doe",
-            "age": 30,
-            "medical_history": "..."
-        }
-        ```
     """
     return hospital_service.add_patient_to_hospital(hospital_id, patient)
 
@@ -184,17 +129,5 @@ async def get_hospital_patients(hospital_id: int, token: dict = Depends(verify_t
         
     Raises:
         HTTPException: 404 Not Found if hospital doesn't exist
-        
-    Example:
-        ```json
-        [
-            {
-                "id": 1,
-                "name": "John Doe",
-                "age": 30,
-                "medical_history": "..."
-            }
-        ]
-        ```
     """
     return hospital_service.get_hospital_patients(hospital_id)

@@ -20,18 +20,6 @@ async def get_patients(token: dict = Depends(verify_token)):
         
     Returns:
         List[PatientResponseDTO]: List of patient objects containing patient information
-        
-    Example:
-        ```json
-        [
-            {
-                "id": 1,
-                "name": "John Doe",
-                "age": 30,
-                "medical_history": "..."
-            }
-        ]
-        ```
     """
     return patient_service.get_all_patients()
 
@@ -49,16 +37,6 @@ async def get_patient(patient_id: int, token: dict = Depends(verify_token)):
         
     Raises:
         HTTPException: 404 Not Found if patient doesn't exist
-        
-    Example:
-        ```json
-        {
-            "id": 1,
-            "name": "John Doe",
-            "age": 30,
-            "medical_history": "..."
-        }
-        ```
     """
     patient = patient_service.get_patient_by_id(patient_id)
     if not patient:
@@ -76,16 +54,6 @@ async def create_patient(patient: PatientCreateDTO, token: dict = Depends(verify
         
     Returns:
         PatientResponseDTO: Created patient object with assigned ID
-        
-    Example:
-        ```json
-        {
-            "id": 1,
-            "name": "John Doe",
-            "age": 30,
-            "medical_history": "..."
-        }
-        ```
     """
     return patient_service.create_patient(patient)
 
@@ -104,16 +72,6 @@ async def update_patient(patient_id: int, patient: PatientUpdateDTO, token: dict
         
     Raises:
         HTTPException: 404 Not Found if patient doesn't exist
-        
-    Example:
-        ```json
-        {
-            "id": 1,
-            "name": "John Doe Updated",
-            "age": 31,
-            "medical_history": "Updated history..."
-        }
-        ```
     """
     updated_patient = patient_service.update_patient(patient_id, patient)
     if not updated_patient:
@@ -134,13 +92,6 @@ async def delete_patient(patient_id: int, token: dict = Depends(verify_token)):
         
     Raises:
         HTTPException: 404 Not Found if patient doesn't exist
-        
-    Example:
-        ```json
-        {
-            "message": "Patient deleted successfully"
-        }
-        ```
     """
     success = patient_service.delete_patient(patient_id)
     if not success:

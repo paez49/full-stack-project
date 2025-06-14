@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from model.entities.hospital import Hospital
 from model.entities.patient import Patient
-from model.dtos.hospital import HospitalCreateDTO, HospitalResponseDTO
+from model.dtos.hospital import HospitalCreateDTO, HospitalResponseDTO, HospitalUpdateDTO
 from model.dtos.patient import PatientCreateDTO, PatientResponseDTO
 from model.entities.database import  SessionLocal
 
@@ -24,20 +24,20 @@ class HospitalService:
         hospitals = result.scalars().all()
         return [HospitalResponseDTO(**h.__dict__) for h in hospitals]
 
-    def get_hospital_by_id(self, hospital_id: int) -> HospitalResponseDTO:
+    def get_hospital_by_id(self, hospital_id: int) -> Hospital:
         result = self.session.execute(select(Hospital).where(Hospital.id == hospital_id))
         hospital = result.scalar_one_or_none()
         if not hospital:
             raise HTTPException(status_code=404, detail="Hospital not found")
-        return HospitalResponseDTO(**hospital.__dict__)
+        return hospital
 
-    def update_hospital(self, hospital_id: int, hospital: HospitalCreateDTO) -> HospitalResponseDTO:
+    def update_hospital(self, hospital_id: int, hospital: HospitalUpdateDTO) -> Hospital:
         db_hospital = self.get_hospital_by_id(hospital_id)
         for key, value in hospital.model_dump().items():
             setattr(db_hospital, key, value)
         self.session.commit()
         self.session.refresh(db_hospital)
-        return HospitalResponseDTO(**db_hospital.__dict__)
+        return db_hospital
 
     def delete_hospital(self, hospital_id: int) -> bool:
         db_hospital = self.get_hospital_by_id(hospital_id)
