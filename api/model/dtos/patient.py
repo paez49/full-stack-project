@@ -9,7 +9,7 @@ class PatientBaseDTO(BaseModel):
     age: int
     oncological:bool
     birth_date:date
-    cancer_type: Optional[CancerType] 
+    cancer_type: Optional[CancerType] = None
 
 class PatientCreateDTO(PatientBaseDTO):
     pass

@@ -3,7 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  /* Forzamos solo el esquema claro para evitar efectos indeseados */
   color-scheme: light;
   color: #213547;
   background-color: #ffffff;
@@ -17,9 +16,14 @@
 body {
   margin: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #f5f5f5; /* ← Aquí el fondo claro global */
+  background-color: #ffffff;
+}
+
+/* Asegurar que el contenedor principal ocupe todo el espacio */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 2rem;
 }

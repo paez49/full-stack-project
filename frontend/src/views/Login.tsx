@@ -24,16 +24,7 @@ const Login: React.FC = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8000/token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      if (!res.ok) throw new Error('Credenciales inválidas');
-
-      const data = await res.json();
-      authService.saveToken(data.token);
+      await authService.login(email, password);
       navigate('/dashboard');
     } catch (err: any) {
       setErrorMsg(err.message || 'Error al iniciar sesión');

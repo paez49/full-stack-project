@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512 512" xml:space="preserve">
+<rect x="208" y="320" style="fill:#3C5D76;" width="96" height="192"/>
+<rect x="256" y="320" style="fill:#1E2E3B;" width="48" height="192"/>
+<rect x="208" y="320" style="fill:#D80027;" width="96" height="96"/>
+<rect x="256" y="320" style="fill:#A2001D;" width="48" height="96"/>
+<circle style="fill:#5A8BB0;" cx="256" cy="176" r="176"/>
+<path style="fill:#3C5D76;" d="M256,0c97.202,0,176,78.798,176,176s-78.798,176-176,176"/>
+<circle style="fill:#E4F1FB;" cx="256" cy="176" r="128"/>
+<path style="fill:#C9E3F7;" d="M256,48c70.694,0,128,57.307,128,128s-57.306,128-128,128"/>
+<circle style="fill:#FFFFFF;" cx="312" cy="168" r="40"/>
+<circle style="fill:#D80027;" cx="232" cy="232" r="24"/>
+<path style="fill:#78B9EB;" d="M248.97,103.03c9.373,9.373,9.373,24.568,0,33.941l-33.941,33.941
+	c-9.371,9.373-24.568,9.373-33.941,0l0,0c-9.373-9.371-9.373-24.568,0-33.941l33.941-33.941
+	C224.402,93.658,239.598,93.658,248.97,103.03L248.97,103.03z"/>
+</svg>
