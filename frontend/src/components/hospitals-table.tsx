@@ -17,9 +17,8 @@ import {
   TableRow,
   TextField,
   Typography,
-  Chip,
 } from "@mui/material"
-import { Pencil, Trash2, Plus, Search, Users, CheckCircle2, XCircle } from "lucide-react"
+import { Pencil, Trash2, Plus, Search, Users } from "lucide-react"
 import type { Hospital } from "../types/hospital"
 import { DeleteHospitalDialog } from "./delete-hospital-dialog"
 import { useSnackbar } from "notistack"
@@ -46,8 +45,8 @@ export function HospitalsTable({
   const { enqueueSnackbar } = useSnackbar()
   const [searchTerm, setSearchTerm] = useState("")
   const [deleteHospital, setDeleteHospital] = useState<Hospital | null>(null)
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [deletingId, setDeletingId] = useState<number | null>(null)
+  const [isDeleting] = useState(false)
+  const [, setDeletingId] = useState<number | null>(null)
 
   const filteredHospitals = hospitals.filter(
     (hospital) =>

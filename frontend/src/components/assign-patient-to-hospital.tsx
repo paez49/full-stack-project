@@ -11,14 +11,13 @@ import {
   Autocomplete,
   TextField,
   CircularProgress,
-  Alert,
 } from "@mui/material"
 import { usePatients } from "../hooks/use-patients"
 import { hospitalAPI } from "../service/hospitalService"
 import { useSnackbar } from "notistack"
 import type { Patient } from "../types/patient"
 
-interface AssignPatientToHospitalProps {
+interface AssignPatientToHospitalProps {    
   hospitalId: number
   hospitalName: string
   onSuccess?: () => void

@@ -10,11 +10,10 @@ import {
   Avatar,
   Chip,
   CircularProgress,
-  IconButton,
   Tooltip,
   Divider,
 } from "@mui/material"
-import { Calendar, Clock, User, Heart, AlertCircle, CheckCircle2 } from "lucide-react"
+import { Calendar, User, Heart, CheckCircle2 } from "lucide-react"
 import type { Patient } from "../types/patient"
 import { getHospitalPatients } from "../service/authService"
 
@@ -87,7 +86,7 @@ export function HospitalPatients({ hospitalId }: HospitalPatientsProps) {
       </Typography>
       <Grid container spacing={3}>
         {patients.map((patient) => (
-          <Grid item xs={12} sm={6} md={4} key={patient.id}>
+          <Grid key={patient.id} sx={{ xs: 12, sm: 6, md: 4 }}>
             <Card
               sx={{
                 height: "100%",
