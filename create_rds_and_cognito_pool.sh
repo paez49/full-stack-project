@@ -11,7 +11,7 @@ DB_ENGINE="postgres"
 DB_INSTANCE_CLASS="db.t3.micro"
 DB_ALLOCATED_STORAGE=20
 DB_REGION="us-east-1"
-ENV_FILE=".env"
+ENV_FILE="./api/.env"
 SG_NAME="health-rds-sg"
 VPC_ID=$(aws ec2 describe-vpcs --region $DB_REGION --query "Vpcs[0].VpcId" --output text)
 
@@ -67,7 +67,7 @@ echo "Saving credentials to $ENV_FILE..."
 
 {
     echo ""
-    echo "# RDS credentials generated on $(date)"
+    echo "# RDS and credentials generated on $(date)"
     echo "RDS_ENDPOINT=$ENDPOINT"
     echo "RDS_DB_NAME=$DB_NAME"
     echo "RDS_USERNAME=$DB_USER"
@@ -138,6 +138,7 @@ ENV_FILE=".env"
 echo "Writing environment variables to $ENV_FILE..."
 
 {
+  echo "# Cognito configuration generated on $(date)"
   echo "AWS_REGION=$AWS_REGION"
   echo "USER_POOL_ID=$USER_POOL_ID"
   echo "APP_CLIENT_ID=$APP_CLIENT_ID"

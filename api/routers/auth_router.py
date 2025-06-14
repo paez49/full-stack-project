@@ -1,18 +1,24 @@
 import boto3
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel
 import os
 
-from fastapi.security import OAuth2PasswordRequestForm
 from model.dtos.auth import Token
 from service.auth_service import authenticate_user
+
 COGNITO_REGION = os.getenv("AWS_REGION")
 USER_POOL_ID = os.getenv("USER_POOL_ID")
 APP_CLIENT_ID = os.getenv("APP_CLIENT_ID")
+
 router = APIRouter()
 client = boto3.client("cognito-idp", region_name=COGNITO_REGION)
 
+class RequestLogin(BaseModel):
+    email: str
+    password: str
+
 @router.post("/token", response_model=Token, tags=["Authentication"])
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+async def login_for_access_token(request: RequestLogin):
     """
     Authenticate user and generate access token.
     
@@ -20,8 +26,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     that can be used for subsequent API requests.
     
     Args:
-        form_data (OAuth2PasswordRequestForm): The login credentials containing:
-            - username: The user's email or username
+        request (RequestLogin): The login credentials containing:
+            - email: The user's email
             - password: The user's password
             
     Returns:
@@ -32,7 +38,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     Raises:
         HTTPException: 401 Unauthorized if credentials are invalid
     """
-    auth_result = await authenticate_user(form_data.username, form_data.password)
+    auth_result = await authenticate_user(request.email, request.password)
     if not auth_result:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
